@@ -26,7 +26,7 @@ model Customer {
   customerEmail  String  @unique
   phoneNo        Int
   address        String
-  profilePicture String
+  profilePicture String?
   password       String
   age            Int
   BookingService         BookingService[]
@@ -39,11 +39,9 @@ model Customer {
 
 model ServiceProvider {
   id                  String     @id @default(dbgenerated("gen_random_uuid()"))
-  serviceProviderName String?
+  serviceProviderName String
   serviceProviderEmail String @unique
   phoneNo             Int
-  serviceLists        String
-  serviceProviderId   Int
   serviceName         String
   DOB                 DateTime
   BookingService         BookingService[]
@@ -58,7 +56,7 @@ model Feedback {
   reviews           String?
   serviceProvider  ServiceProvider @relation(fields: [serviceProviderId], references: [id])
   serviceProviderId String
-  serviceName      String?
+  serviceName      String
   customer          Customer @relation(fields: [customerId], references: [id])
   customerId        String
 }
@@ -74,14 +72,14 @@ model SearchService {
 
 model ServiceHistory {
   id                 String       @id @default(dbgenerated("gen_random_uuid()"))
-  serviceDate        DateTime?
+  serviceDate        DateTime
   serviceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
   serviceProviderId String
-  serviceName       String?
+  serviceName       String
   customer           Customer @relation(fields: [customerId], references: [id])
   customerId         String
-  serviceType        String?
-  bookingId          String?
+  serviceType        String
+  bookingId          String
 }
 
 model BookingService {
