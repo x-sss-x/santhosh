@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model Service {
+  id                   String      @id @default(dbgenerated("gen_random_uuid()"))
+  customer             Customer @relation(fields: [customerId], references: [id])
+  customerId           String
+  serviceProvider      ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  serviceProviderId    String
+  amountCharged        String
+  serviceName          String
+}
+
+model Customer {
+  id             String     @id @default(dbgenerated("gen_random_uuid()"))
+  customerName   String
+  customerEmail  String  @unique
+  phoneNo        Int
+  address        String
+  profilePicture String
+  password       String
+  age            Int
+  BookingService         BookingService[]
+  SearchService    SearchService[]
+  Feedback        Feedback[]
+  Service        Service[]
+  ServiceHistory       ServiceHistory[]
+  
+}
+
+model ServiceProvider {
+  id                  String     @id @default(dbgenerated("gen_random_uuid()"))
+  serviceProviderName String?
+  serviceProviderEmail String @unique
+  phoneNo             Int
+  serviceLists        String
+  serviceProviderId   Int
+  serviceName         String
+  DOB                 DateTime
+  BookingService         BookingService[]
+  Feedback        Feedback[]
+  Service              Service[]
+  ServiceHistory       ServiceHistory[]
+}
+
+model Feedback {
+  id                String       @id @default(dbgenerated("gen_random_uuid()"))
+  rating            Float
+  reviews           String?
+  serviceProvider  ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  serviceProviderId String
+  serviceName      String?
+  customer          Customer @relation(fields: [customerId], references: [id])
+  customerId        String
+}
+
+model SearchService {
+  id          String      @id @default(dbgenerated("gen_random_uuid()"))
+  customer    Customer @relation(fields: [customerId], references: [id])
+  customerId  String
+  serviceName String
+  serviceId   Int
+  serviceType String
+}
+
+model ServiceHistory {
+  id                 String       @id @default(dbgenerated("gen_random_uuid()"))
+  serviceDate        DateTime?
+  serviceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  serviceProviderId String
+  serviceName       String?
+  customer           Customer @relation(fields: [customerId], references: [id])
+  customerId         String
+  serviceType        String?
+  bookingId          String?
+}
+
+model BookingService {
+  id                String       @id @default(dbgenerated("gen_random_uuid()"))
+  customer          Customer  @relation(fields: [customerId], references: [id])
+  customerId        String
+  serviceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  serviceProviderId String
+  amountCharged     String?
+  serviceName       String?
+  serviceDate       DateTime?
+  bookingId         String?
+}
+
+
+
