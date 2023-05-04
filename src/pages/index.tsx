@@ -1,14 +1,21 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+// src/index.tsx
 
-const inter = Inter({ subsets: ['latin'] })
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import { counterSlice } from '../store/counterSlice';
+import App from './App';
 
-export default function Home() {
-  return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <h1 className='text-xl font-bold font-sans'> multi service app</h1>
-    </main>
-  )
-}
+const store = configureStore({
+  reducer: {
+    counter: counterSlice.reducer,
+  },
+});
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
