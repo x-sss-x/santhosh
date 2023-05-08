@@ -1,25 +1,54 @@
-import React from 'react';
-import { Meta, Story } from '@storybook/react';
-import Button from '../app/Toggles/Button';
+import type { Meta, StoryObj } from '@storybook/react';
+import Button from '../components/Button';
 
-export default {
-  title: 'Components/Button',
+const meta: Meta<typeof Button> = {
+  title: 'examples/Button',
   component: Button,
-  argTypes: {
-    children: { control: 'text' },
+};
+
+export default meta;
+
+type Story = StoryObj<typeof Button>;
+
+export const Primary: Story = {
+  args: {
+    intent: 'primary',
+    fullwidth: true,
+    children: 'Primary Label',
   },
-} as Meta;
-
-const Template: Story<{ children: React.ReactNode }> = (args) => (
-  <Button {...args} />
-);
-
-export const Primary = Template.bind({});
-Primary.args = {
-  children: 'Primary Button',
+  argTypes: {
+    fullwidth: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+  },
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  children: 'Secondary Button',
+export const Green: Story = {
+  args: {
+    intent: 'green',
+    fullwidth: true,
+    children: 'Green Label',
+  },
+  argTypes: {
+    fullwidth: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+  },
 };
+
+export const Red: Story = {
+  args: {
+    intent: 'red',
+    fullwidth: true,
+    children: 'Red Label',
+  },
+  argTypes: {
+    fullwidth: {
+      type: 'boolean',
+      defaultValue: false,
+    },
+  },
+};
+
