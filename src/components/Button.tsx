@@ -6,7 +6,7 @@ export const buttonStyles = cva("px-5 py-2 flex items-center justify-center text
   variants: {
     intent: {
       primary:
-        "bg-blue-500 text-black font-medium hover:bg-blue-800 hover:text-white transition-all duration-75  w-600 h-61" ,
+        "bg-blue-500 text-black font-medium hover:bg-blue-800 hover:text-white transition-all duration-75 " ,
       disabled: "bg-gray-300 text-gray-900 hover:cursor-not-allowed",
       green:
         "bg-green-500 text-black hover:bg-green-800 hover:text-white transition-all duration-75 font-medium",
