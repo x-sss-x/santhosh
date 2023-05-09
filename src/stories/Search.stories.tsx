@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import Search from "../components/Search";
+import type { Meta, StoryObj } from '@storybook/react';
+import Search, { SearchProps } from '../components/Search';
 
 const meta: Meta<typeof Search> = {
-  title: "examples/Search",
+  title: 'Examples/Search',
   component: Search,
 };
 
@@ -12,13 +12,14 @@ type Story = StoryObj<typeof Search>;
 
 export const Default: Story = {
   args: {
-    placeholder: "Search...",
+    placeholder: 'Search...',
+    inputVariant: 'default',
   },
 };
 
 export const AnotherVariant: Story = {
   args: {
-    placeholder: "Name",
-    inputVariant: "another",
+    placeholder: 'Search...',
+    inputVariant: 'another',
   },
 };
