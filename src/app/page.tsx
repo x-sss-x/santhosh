@@ -4,6 +4,5 @@ import Input from "../components/Input"
 export default function Page() {
     return <div>
     <h1>Hello, Next.js!</h1>;
-    <Input variant="person" placeholder="username"/>
   </div>
   }
