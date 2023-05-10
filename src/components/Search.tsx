@@ -6,8 +6,8 @@ export type SearchProps = VariantProps<typeof searchStyles>;
 export const searchStyles = cva("relative flex items-center", {
   variants: {
     inputVariant: {
-      default: "bg-gray-100 border border-gray-300 w-1672 h-100 rounded-2xl pl-10 pr-4 py-2",
-      another: "bg-gray-100 border border-gray-300 w-1672 h-100 rounded-2xl pl-10 pr-4 py-2",
+      default: "bg-zinc-300 border border-gray-300 w-1672 h-100 rounded-2xl pl-10 pr-4 py-2",
+      another: "bg-zinc-300 border border-gray-300 w-1672 h-100 rounded-2xl pl-10 pr-4 py-2",
     },
   },
 });

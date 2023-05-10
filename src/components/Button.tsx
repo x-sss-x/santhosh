@@ -6,12 +6,12 @@ export const buttonStyles = cva("px-5 py-2 flex items-center justify-center text
   variants: {
     intent: {
       primary:
-        "bg-blue-500 text-black font-medium hover:bg-blue-800 hover:text-white transition-all duration-75 " ,
+        "bg-sky-600 text-black font-bold hover:bg-sky-800 hover:text-white transition-all duration-75 " ,
       disabled: "bg-gray-300 text-gray-900 hover:cursor-not-allowed",
       green:
-        "bg-green-500 text-black hover:bg-green-800 hover:text-white transition-all duration-75 font-medium",
+        "bg-lime-800 text-white text-sm hover:bg-green-400 hover:text-black transition-all duration-75 font-medium",
       red:
-        "bg-red-500 text-black hover:bg-red-800 hover:text-white transition-all duration-75 font-medium",
+        "bg-red-800 text-white hover:bg-red-400 hover:text-black transition-all duration-75 font-medium",
     },
     fullwidth: {
       true: "w-full",
