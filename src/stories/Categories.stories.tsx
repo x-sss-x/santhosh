@@ -14,7 +14,7 @@ import couponDealsIcon from '../../public/Images/Icons/coupon-deals.png';
 import liquorDeliveryIcon from '../../public/Images/Icons/liquor-delivery.png';
 
 const meta: Meta<typeof Categories> = {
-  title: 'Examples/Categories',
+  title: 'Components/Categories',
   component: Categories,
 };
 
