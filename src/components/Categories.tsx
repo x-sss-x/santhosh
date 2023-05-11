@@ -21,7 +21,7 @@ interface CategoriesProps {
 
 export default function Categories({ categories }: CategoriesProps) {
   return (
-    <div className=" mx-4 grid grid-cols-4 gap-4">
+    <div className=" mx-4 grid grid-cols-3 gap-4">
       {categories.map((category) => (
         <button
           key={category.name}

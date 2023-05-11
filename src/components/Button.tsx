@@ -11,7 +11,7 @@ export const buttonStyles = cva("px-5 py-2 flex items-center justify-center text
       green:
         "bg-lime-800 text-white text-sm hover:bg-green-400 hover:text-black transition-all duration-75 font-medium",
       red:
-        "bg-red-800 text-white hover:bg-red-400 hover:text-black transition-all duration-75 font-medium",
+        "bg-red-800 text-white text-sm hover:bg-red-400 hover:text-black transition-all duration-75 font-medium",
     },
     fullwidth: {
       true: "w-full",
@@ -22,9 +22,11 @@ export const buttonStyles = cva("px-5 py-2 flex items-center justify-center text
   },
 });
 
-interface ButtonExtendedProps extends ButtonProps {
+export type ButtonExtendedProps = ButtonProps & {
   children: string;
-}
+
+};
+
 
 export default function Button({
   intent,
