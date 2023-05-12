@@ -34,4 +34,4 @@ export const Warning: Story = {
     children: "Warning message ...",
   },
   argTypes: {},
-};
+}
