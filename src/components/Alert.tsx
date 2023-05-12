@@ -1,40 +1,41 @@
-import type { Meta, Story } from "@storybook/react";
-import Alert, { AlertProps } from "../components/Alert";
+import { VariantProps, cva } from "class-variance-authority";
+import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineExclamationCircle } from "react-icons/ai";
 
-const meta: Meta<AlertProps> = {
-  title: "components/Alert",
-  component: Alert,
-};
+export type AlertProps = VariantProps<typeof AlertBoxStyle>;
 
-export default meta;
-
-type AlertStoryProps = {
-  args: AlertProps;
-};
-
-export const Success: Story<AlertStoryProps> = ({
-  args: { variant = "success", children = "Success message ..." },
-  ...props
-}) => (
-  <Alert variant={variant} {...props}>
-    {children}
-  </Alert>
+export const AlertBoxStyle = cva(
+  "flex items-center justify-center bg-white shadow-lg rounded-3xl py-2 w-fit px-3",
+  {
+    variants: {
+      variant: {
+        success: "border-2 bg-green-600  border-gray-400 text-black",
+        error: "border-2 bg-red-600  border-gray-400 text-black",
+        warning: "border-2  bg-blue-400  border-gray-400 text-black",
+      },
+    },
+    defaultVariants: {
+      variant: "success",
+    },
+  }
 );
 
-export const Error: Story<AlertStoryProps> = ({
-  args: { variant = "error", children = "Error message ..." },
-  ...props
-}) => (
-  <Alert variant={variant} {...props}>
-    {children}
-  </Alert>
-);
+interface AlertExtendedProps extends AlertProps {
+  children: string;
+}
 
-export const Warning: Story<AlertStoryProps> = ({
-  args: { variant = "warning", children = "Warning message ..." },
+export default function Alert({
+  children,
+  variant,
   ...props
-}) => (
-  <Alert variant={variant} {...props}>
-    {children}
-  </Alert>
-);
+}: AlertExtendedProps) {
+  return (
+    <div className={AlertBoxStyle({ variant })} {...props}>
+      <div className="px-2 text-lg">
+        {variant === "success" && <AiOutlineCheckCircle />}
+        {variant === "warning" && <AiOutlineExclamationCircle />}
+        {variant === "error" && <AiOutlineCloseCircle />}
+      </div>
+      {children}
+    </div>
+  );
+}
