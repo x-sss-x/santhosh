@@ -21,11 +21,7 @@ interface CategoriesProps {
 
 export default function Categories({ categories }: CategoriesProps) {
   return (
-<<<<<<< HEAD
     <div className=" mx-4 grid grid-cols-3 gap-4">
-=======
-    <div className="mx-4 grid grid-cols-3 gap-4">
->>>>>>> master
       {categories.map((category) => (
         <button key={category.name} className="bg-zinc-300">
           <div className="flex items-center justify-center">
