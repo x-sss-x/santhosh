@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Filter, { FilterProps } from '../components/Filter';
 
 const meta: Meta<typeof Filter> = {
-  title: 'Examples/Filter',
+  title: 'components/Filter',
   component: Filter,
 };
 
