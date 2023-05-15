@@ -1,6 +1,9 @@
 import { VariantProps, cva } from "class-variance-authority";
-import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineExclamationCircle } from "react-icons/ai";
-
+import {
+  AiOutlineCheckCircle,
+  AiOutlineCloseCircle,
+  AiOutlineExclamationCircle,
+} from "react-icons/ai";
 
 export type AlertProps = VariantProps<typeof AlertBoxStyle>;
 
@@ -20,14 +23,12 @@ export const AlertBoxStyle = cva(
   }
 );
 
-
 interface ButtonExtendedProps extends AlertProps {
   children: string;
 }
 
 export default function Alert({
   children,
-
   varient,
   ...props
 }: ButtonExtendedProps) {
@@ -41,6 +42,4 @@ export default function Alert({
       {children}
     </div>
   );
-
 }
-
