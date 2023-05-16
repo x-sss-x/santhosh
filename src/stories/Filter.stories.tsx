@@ -1,15 +1,20 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import Filter, { FilterProps } from '../components/Filter';
+import React from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { Story } from "@storybook/react";
+import FilterButton from "../components/Filter";
 
-const meta: Meta<typeof Filter> = {
-  title: 'components/Filter',
-  component: Filter,
-};
+// Create a query client
+const queryClient = new QueryClient();
 
-export default meta;
+export default {
+  title: "Components/FilterButton",
+  component: FilterButton,
+} as const;
 
-type Story = StoryObj<typeof Filter>;
+const Template: Story = () => (
+  <QueryClientProvider client={queryClient}>
+    <FilterButton />
+  </QueryClientProvider>
+);
 
-export const Default: Story = {
-  args: {},
-};
+export const Default = Template.bind({});

@@ -1,17 +1,11 @@
-import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import Image from 'next/image';
+import { Story } from '@storybook/react';
 import Menu from '../components/Menu';
-import menuIcon from '../../public/Images/Icons/menu.png';
 
 export default {
-  title: 'Components/Menu',
+  title: 'components/Menu',
   component: Menu,
-} as Meta;
+};
 
-const Template: Story = (args) => <Menu {...args} />;
+const Template: Story = () => <Menu />;
 
 export const Default = Template.bind({});
-Default.args = {
-  icon: <Image src={menuIcon} alt="Menu" width={24} height={24} />
-};

@@ -1,91 +1,41 @@
-import { useState } from 'react';
-import { VariantProps, cva } from 'class-variance-authority';
+import React, { useState } from "react";
+import { useQuery } from "react-query";
+import Image from "next/image";
+import filterIcon from "../../public/Images/Filter/filter.png";
 
-export type FilterProps = VariantProps<typeof filterStyles>;
+const FilterButton = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-export const filterStyles = cva({
-  variants: {
-    size: {
-      default: 'w-100 h-100',
-    },
-  },
-});
-
-export default function Filter() {
-  const [showOptions, setShowOptions] = useState(false);
-  const [allServices, setAllServices] = useState(false);
-  const [recentServices, setRecentServices] = useState(false);
-  const [feedbacks, setFeedbacks] = useState(false);
-
-  const handleToggleOptions = () => {
-    setShowOptions(!showOptions);
-  };
-
-  const handleAllServicesChange = () => {
-    setAllServices(!allServices);
-  };
-
-  const handleRecentServicesChange = () => {
-    setRecentServices(!recentServices);
-  };
-
-  const handleFeedbacksChange = () => {
-    setFeedbacks(!feedbacks);
-  };
-
-  const handleApplyClick = () => {
-    // Handle apply logic here
+  const handleClick = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
-    <div className={filterStyles()}>
-      <div className="block justify-between items-center w-200 h-200 px-4 py-2">
+    <div>
+      {!isOpen && (
         <button
-          className="bg-zinc-300 w-1762 h-100 px-4 py-2"
-          onClick={handleToggleOptions}
+          className="flex flex-col items-center bg-zinc-300 w-73 h-73 rounded p-4"
+          onClick={handleClick}
         >
-          Filters
+          <Image src={filterIcon} alt="Filter" width={32} height={32} />
+          <p className="text-neutral-400 mt-2">Filters</p>
         </button>
-      </div>
-      {showOptions && (
-        <div className="px-4 py-2 bg-zinc-300 ">
-          <div>
-            <input
-              className="bg-zinc-300 hover:bg-zinc-400"
-              type="checkbox"
-              checked={allServices}
-              onChange={handleAllServicesChange}
-            />
-            <label htmlFor="allServices">All types of services</label>
-          </div>
-          <div>
-            <input
-              className="bg-zinc-300 hover:bg-zinc-400"
-              type="checkbox"
-              checked={recentServices}
-              onChange={handleRecentServicesChange}
-            />
-            <label htmlFor="recentServices">Most recently used services</label>
-          </div>
-          <div>
-            <input
-              className="bg-zinc-300 hover:bg-zinc-400"
-              type="checkbox"
-              checked={feedbacks}
-              onChange={handleFeedbacksChange}
-            />
-            <label htmlFor="feedbacks">Feedbacks</label>
-          </div>
-          <div className="flex justify-end">
-            <button
-              className="bg-zinc-300 px-4 py-2 hover:bg-zinc-400"
-              onClick={handleApplyClick}
-            >
-              Apply
-            </button>
-          </div>
+      )}
+      {isOpen && (
+        <div className="absolute mt-2 p-2 rounded ">
+          <button className="w-full py-2 mb-2 rounded border border-blue-500 bg-stone-200 text-neutral-400 hover:bg-gray-100">
+            All types of services
+          </button>
+          <button className="w-full py-2 mb-2 rounded border border-blue-500 bg-stone-200 text-neutral-400 hover:bg-gray-100">
+            Most recently used services
+          </button>
+          <button className="w-full py-2 mb-2 rounded border border-blue-500 bg-stone-200 text-neutral-400 hover:bg-gray-100">
+            Based on feedbacks
+          </button>
         </div>
       )}
     </div>
   );
-}
+};
+
+export default FilterButton;
