@@ -68,3 +68,16 @@ export const PhoneNumber: Story = {
       inputVariant: "password",
   },
   };
+  
+export const Specialization : Story = {
+args : {
+  placeholder: 'Specialization',
+  inputVariant: 'specialization' as const,
+},
+};
+export const idproff : Story = {
+  args : {
+    placeholder: 'idproff',
+    inputVariant: 'idproff' as const,
+  },
+  };

@@ -14,7 +14,7 @@ const MedicineDelivery: React.FC<MedicineDeliveryProps> = ({ text }) => {
       <div className="flex items-center justify-center">
         <Image src={medicineDeliveryImage} alt="Medicine Delivery" width={64} height={64} />
       </div>
-      <div className="mt-2 text-center">{text}</div>
+      <div className="mt-2 text-center text-sky-800">{text}</div>
     </button>
   );
 };

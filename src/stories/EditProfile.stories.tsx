@@ -2,7 +2,7 @@ import { Story, Meta } from '@storybook/react';
 import EditProfile from '../components/EditProfile';
 
 export default {
-  title: 'Edit Profile',
+  title: 'pages/Editprofile/Edit Profile',
   component: EditProfile,
 } as Meta;
 

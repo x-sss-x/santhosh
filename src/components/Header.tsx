@@ -8,7 +8,7 @@ interface HeaderProps {
 
 export default function Header({ logo }: HeaderProps) {
   return (
-    <div className="w-393 mx-0 h-118 bg-blue-500 flex items-center justify-between">
+    <div className="w-393 h-118 bg-blue-500 flex items-center justify-between">
       <div className="py-4 px-4">
         <Image src={logoIcon} alt="Logo" width={157} height={118} />
       </div>
