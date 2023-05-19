@@ -1,16 +1,17 @@
-import { Story } from '@storybook/react';
-import Profile from '../components/Profile';
+import { Story, Meta } from '@storybook/react';
+import Profile, { ProfileProps } from '../components/Profile';
+import profileImage from '../../public/Images/Profile/profile.png';
 
 export default {
-  title: 'Profile',
+  title: 'components/Profile',
   component: Profile,
-};
+} as Meta;
 
-const Template: Story = (args) => <Profile {...args} />;
+const Template: Story<ProfileProps & { imageSrc: StaticImageData; text: string }> = (args) => <Profile {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  name: 'varshitha',
-  email: 'varshitha@example.com',
-  customerId: '1234567890',
+  imageSrc: profileImage,
+  text: 'Santhosh',
+  id_no:90,
 };
