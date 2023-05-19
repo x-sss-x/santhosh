@@ -3,11 +3,11 @@ import { AiOutlineSearch } from "react-icons/ai";
 
 export type SearchProps = VariantProps<typeof searchStyles>;
 
-export const searchStyles = cva("relative flex items-center", {
+export const searchStyles = cva("w-96 xs:w-64 relative flex items-center", {
   variants: {
     inputVariant: {
-      default: "bg-zinc-300 border border-gray-300 w-1672 h-100 rounded-2xl pl-10 pr-4 py-2",
-      another: "bg-zinc-300 border border-gray-300 w-1672 h-100 rounded-2xl pl-10 pr-4 py-2",
+      default: "bg-zinc-300 border border-gray-300 rounded-2xl pl-10 pr-4 py-2",
+      another: "bg-zinc-300 border border-gray-300 rounded-2xl pl-10 pr-4 py-2",
     },
   },
 });

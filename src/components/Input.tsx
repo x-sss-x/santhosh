@@ -7,7 +7,7 @@ import SpecializationIcon from "../../public/Images/Icons/specialization.png";
 import IdIcon from "../../public/Images/Icons/id.png";
 export type InputProps = VariantProps<typeof inputStyles>;
 
-export const inputStyles = cva('relative flex items-center', {
+export const inputStyles = cva('relative flex items-center w-96 xs:w-48', {
   variants: {
     inputVariant: {
       default: 'bg-stone-200 border border-gray-300 rounded-lg px-4 py-2',

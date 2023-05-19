@@ -8,7 +8,7 @@ import {
 export type AlertProps = VariantProps<typeof AlertBoxStyle>;
 
 export const AlertBoxStyle = cva(
-  "flex items-center justify-center bg-white shadow-lg rounded-3xl py-2 w-fit px-3",
+  "w-96 xs:w-48 xs:text-sm flex items-center justify-center bg-white shadow-lg rounded-3xl px-5 py-2",
   {
     variants: {
       varient: {
@@ -34,7 +34,7 @@ export default function Alert({
 }: ButtonExtendedProps) {
   return (
     <div className={AlertBoxStyle({ varient })} {...props}>
-      <div className="px-2 text-lg">
+      <div >
         {varient == "success" && <AiOutlineCheckCircle />}
         {varient == "warning" && <AiOutlineExclamationCircle />}
         {varient == "error" && <AiOutlineCloseCircle />}

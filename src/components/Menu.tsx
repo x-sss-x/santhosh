@@ -28,7 +28,7 @@ const Menu = () => {
             >
               <HeadlessMenu.Items
                 static
-                className="absolute mt-2 w-48 bg-white rounded-lg shadow-lg focus:outline-none"
+                className="absolute w-96 xs:w-48 mt-2 w-48 bg-white rounded-lg shadow-lg focus:outline-none"
               >
                 <HeadlessMenu.Item>
                   {({ active }) => (
