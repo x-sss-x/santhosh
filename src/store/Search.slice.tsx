@@ -44,7 +44,6 @@ export const searchSlice = createSlice({
       try {
         const response = await SupaClient.from('service')
           .select('*,service(service_name)')
-          .limit(10)
           .order('created_at', { ascending: false })
           .ilike('service_name', `%${searchQuery}%`);
   
