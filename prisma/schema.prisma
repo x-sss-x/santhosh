@@ -71,6 +71,7 @@ model review {
   service_id String 
   rating Float
   review_content String
+  created_at DateTime @db.Timestamptz() @default(dbgenerated("now()"))
 }
 
 model request {
