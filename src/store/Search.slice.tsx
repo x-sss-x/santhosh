@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { SupaClient } from "../utils/supabase";
+import { SupaClient } from "../../utils/supabase";
 
 interface InitialStateProps {
   searchResults: Service[];
@@ -44,10 +44,13 @@ export const searchSlice = createSlice({
       try {
         const response = await SupaClient.from('service')
           .select('*,service(service_name)')
-          .order('created_at', { ascending: false })
           .ilike('service_name', `%${searchQuery}%`);
   
-        const data = response.data;
+        const data = response.data ? response.data.map((item: any) => ({
+          id: item.service_id,
+          name: item.service_name,
+        })) as Service[] : [];
+  
         return data;
       } catch (error) {
         return rejectWithValue({ msg: 'Something went wrong!' });
@@ -55,5 +58,3 @@ export const searchSlice = createSlice({
     }
   );
   
-
-
