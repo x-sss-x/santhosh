@@ -14,7 +14,7 @@ const Page = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSearch = () => {
-    dispatch(searchService(searchQuery));
+    dispatch(searchService({searchQuery}));
     setSearchClicked(true);
   };
 

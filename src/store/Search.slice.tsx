@@ -4,7 +4,7 @@ import { SupaClient } from "../../utils/supabase";
 interface InitialStateProps {
   searchResults: Service[];
   isLoading: boolean;
-  error: string | null;
+  error: string | null | undefined;
 }
 
 interface Service {
@@ -27,34 +27,37 @@ export const searchSlice = createSlice({
           state.isLoading = true;
           state.error = null;
         })
-        builder.addCase(searchService.fulfilled, (state, action) => {
+        builder.addCase(searchService.fulfilled, (state, {payload}) => {
           state.isLoading = false;
-          state.searchResults = action.payload;
+          state.searchResults = payload;
         })
-        builder.addCase(searchService.rejected, (state, action) => {
+        builder.addCase(searchService.rejected, (state, {payload}) => {
           state.isLoading = false;
-          state.error = action.payload as string;
+          state.error = payload?.msg;
         });
     },
   });
 
-  export const searchService = createAsyncThunk(
-    'searchService/search',
-    async (searchQuery: string, { rejectWithValue }) => {
+  export const searchService = createAsyncThunk<
+  any,
+  {searchQuery:string},
+  {
+    rejectValue: {
+      msg: string;
+    };
+  }
+>("/search/searchService",
+    async ( payload, { fulfillWithValue, rejectWithValue } ) => {
       try {
         const response = await SupaClient.from('service')
-          .select('*,service(service_name)')
-          .ilike('service_name', `%${searchQuery}%`);
-  
-        const data = response.data ? response.data.map((item: any) => ({
-          id: item.service_id,
-          name: item.service_name,
-        })) as Service[] : [];
-  
-        return data;
-      } catch (error) {
-        return rejectWithValue({ msg: 'Something went wrong!' });
+        .select('*')
+        .eq('service_name', payload.searchQuery); 
+
+        const data = response.data;
+        return fulfillWithValue(data);
+      } catch (e) {
+        return rejectWithValue({ msg: "Something went wrong !" });
+      }          
       }
-    }
   );
   
