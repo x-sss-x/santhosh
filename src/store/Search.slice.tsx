@@ -51,7 +51,7 @@ export const searchSlice = createSlice({
       try {
         const response = await SupaClient.from('service')
         .select('*')
-        .eq('service_name', payload.searchQuery); 
+        .ilike('service_name', `%${payload.searchQuery}%`); 
 
         const data = response.data;
         return fulfillWithValue(data);

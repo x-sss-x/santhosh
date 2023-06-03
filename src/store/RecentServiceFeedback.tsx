@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { SupaClient } from "../../utils/supabase";
 
-export const FeedbackThunk = createAsyncThunk<
+export const viewFeedBack = createAsyncThunk<
   any,
   void,
   {
@@ -10,11 +10,12 @@ export const FeedbackThunk = createAsyncThunk<
     };
   }
 >(
-  "/Feedback/RecentServiceFeedback",
+  "/feedback/viewFeedBack",
   async (_payload, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const response = await SupaClient.from("customer")
-        .select("*,customer(customer_name)");
+      const response = await SupaClient.from("review")
+      .select("*,customer(customer_name)")
+      .order("created at")
       const data = response.data;
       return fulfillWithValue(data);
     } catch (e) {
@@ -23,14 +24,11 @@ export const FeedbackThunk = createAsyncThunk<
   }
 );
 
-export const postFeedBack = createAsyncThunk<
+export const storeFeedback = createAsyncThunk<
   any,
   {
-    rating: number;
+    id: string;
     content: string;
-    customer_id: string;
-    review_id: string;
-    service_id: string;
   },
   {
     rejectValue: {
@@ -38,21 +36,18 @@ export const postFeedBack = createAsyncThunk<
     };
   }
 >(
-  "/RecentServiceFeedback/feedback",
+  "/feedback/storeFeedback",
   async (payload, { fulfillWithValue, rejectWithValue,dispatch }) => {
     try {
-      const response = await SupaClient.from("review")
+      const response = await SupaClient.from("comments")
         .insert({
-          customer_id:payload.customer_id,
-          review_id:payload.review_id,
-          review_content: payload.content,
-          service_id:payload.service_id,
-          rating: payload.rating,
+          content: payload.content,
+          usersId: payload.id,
         })
         .select("*,customer(customer_name)")
         .single();
       const data = response.data;
-      dispatch(FeedbackThunk());
+      dispatch(viewFeedBack());
       return fulfillWithValue(data);
     } catch (e) {
       return rejectWithValue({ msg: "Something went wrong !" });
@@ -74,34 +69,34 @@ const initialState: InitialStateProps = {
   isPosting: false,
 };
 
-export const feedbackSclice = createSlice({
-  name: "feedbacks",
+export const feedbackSlice = createSlice({
+  name: "feedback",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(FeedbackThunk.fulfilled, (state, { payload }) => {
+    builder.addCase(viewFeedBack.fulfilled, (state, { payload }) => {
       state.data = payload;
       state.isLoading = false;
       state.error = null;
     });
-    builder.addCase(FeedbackThunk.pending, (state) => {
+    builder.addCase(viewFeedBack.pending, (state) => {
       state.isLoading = true;
       state.error = null;
     });
-    builder.addCase(FeedbackThunk.rejected, (state, { payload }) => {
+    builder.addCase(viewFeedBack.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload?.msg;
     });
 
-    builder.addCase(postFeedBack.fulfilled, (state, { payload }) => {
+    builder.addCase(storeFeedback.fulfilled, (state, { payload }) => {
       state.isPosting = false;
       state.error = null;
     });
-    builder.addCase(postFeedBack.pending, (state) => {
+    builder.addCase(storeFeedback.pending, (state) => {
       state.isPosting = true;
       state.error = null;
     });
-    builder.addCase(postFeedBack.rejected, (state, { payload }) => {
+    builder.addCase(storeFeedback.rejected, (state, { payload }) => {
       state.isPosting = false;
       state.error = payload?.msg;
     });
