@@ -1,12 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import {searchSlice} from "./Search.slice";
 import {useSelector} from "react-redux"
-import {feedbackSlice} from "./RecentServiceFeedback"
+import {feedbackSclice} from "./Feedback.silce"
+import { ServiceHistory } from "./ServiceHistory.slice";
+import { booking } from "./BookServiceProvider.slice";
 
 export const store = configureStore({
   reducer: {
     [searchSlice.name]:searchSlice.reducer,
-    [feedbackSlice.name]:feedbackSlice.reducer
+    [feedbackSclice.name]:feedbackSclice.reducer,
+    [ServiceHistory.name]:ServiceHistory.reducer,
+    [booking.name]:booking.reducer
   },
 });
 

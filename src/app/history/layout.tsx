@@ -1,7 +1,7 @@
 "use client"
 import { useEffect } from "react";
 import { useAppDispatch } from "../../../hooks";
-import { viewFeedback } from "../../store/Feedback.silce";
+
 
 export default function RootLayout({
   children,
@@ -11,7 +11,7 @@ export default function RootLayout({
   const dispatch = useAppDispatch()
 
   useEffect(()=>{
-    dispatch(viewFeedback())
+
   },[dispatch])
 
   return (

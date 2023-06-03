@@ -1,78 +1,105 @@
 "use client";
-import { Comment } from "@/components/";
-import { useAppSelector } from "../../../../store";
-import moment from "moment";
-import { useCallback, useEffect, useState } from "react";
-import { SupaClient } from "../../../../utils/supabase";
+import React, { useEffect , useCallback, useState} from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../store";
+import { useAppDispatch } from "../../../hooks";
+import { viewFeedback, storeFeedback } from "../../store/Feedback.silce";
 import { useParams } from "next/navigation";
-import { useAppDispatch } from "../../../../hooks";
-import { postComment } from "../../../../store/comments.slice";
+import { SupaClient } from "../../../utils/supabase";
 
-export default function Page() {
+
+const Page: React.FC = () => {
+  const feedbackData = useSelector((state: RootState) => state.feedback.data);
+  const isLoading = useSelector((state: RootState) => state.feedback.isLoading);
+  const isPosting = useSelector((state: RootState) => state.feedback.isPosting);
+  const error = useSelector((state: RootState) => state.feedback.error);
+  const [content, setContent] = React.useState("");
+  const [rating, setRating] = React.useState(0);
   const [username, setUsername] = useState<undefined | string>(undefined);
-  const [content, setContent] = useState<undefined | string>("");
-  const commentsList = useAppSelector((state) => state.comments.data) as [];
-  const params = useParams();
+
   const dispatch = useAppDispatch();
-  const isPosting = useAppSelector(
-    (state) => state.comments.isPosting
-  ) as boolean;
+  const params = useParams();
+  const params1 = useParams();
+  
 
-  const fetchUsername = useCallback(async () => {
-    const response = await SupaClient.from("users")
-      .select("username")
-      .eq("id", params.userId)
-      .single();
-    setUsername(response.data?.username);
-  }, [params.userId]);
-
+  
   useEffect(() => {
     fetchUsername();
+    fetchUsername2();
+    viewFeedback();
+
   }, []);
 
+
+  
+  const fetchUsername2 = useCallback(async () => {
+    const response = await SupaClient.from("service")
+      .select("service_name")
+      .eq("id", params.service_id)
+      .single();
+    setUsername(response.data?.service_name);
+  }, [params.service_id]);
+
+  const fetchUsername = useCallback(async () => {
+    const response = await SupaClient.from("customer")
+      .select("customer_name")
+      .eq("id", params.customer_id)
+      .single();
+    setUsername(response.data?.customer_name);
+  }, [params.customer_id]);
+
+
+  const handleSubmit = () => {
+    if (content) {
+      dispatch(
+        storeFeedback({
+          content,
+          rating,
+          service_id: params1.service_id, 
+          customer_id: params.cutomer_id, 
+        })
+      );
+      setContent("");
+      setRating(0);
+    }
+  };
+
   return (
-    <div className="w-1/2 h-full border border-slate-400 relative overflow-hidden">
-      <header className="px-5 py-3 w-full flex justify-center border-b border-b-slate-500">
-        <h1 className={"text-2xl"}>Social Media - {username}</h1>
-      </header>
-      <div
-        id="comments-container"
-        className="h-full w-full p-5 pb-36 flex flex-col gap-2 overflow-y-scroll"
-      >
-        {commentsList?.map((comment: any) => (
-          <Comment
-            key={comment.id}
-            content={comment.content}
-            createdAt={moment(comment.created_at).fromNow()}
-            id={comment.id}
-            username={comment.users.username}
+    <div>
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
+
+      
+
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="content">Content</label>
+          <input
+            type="text"
+            id="content"
+            name="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
           />
-        ))}
-      </div>
-      <div className="w-full flex py-4 px-5 backdrop-blur-sm border-t gap-3 border-t-slate-300 sticky bottom-0">
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          className="h-10 w-full rounded-md text-black text-lg"
-        ></textarea>
-        <button
-          id="add-comment-button"
-          className={
-            "px-3 rounded-md py-2 flex justify-center items-center text-xl bg-blue-700 text-white"
-          }
-          onClick={() => {
-            if (content && params.userId)
-              dispatch(
-                postComment({
-                  content,
-                  id: params.userId,
-                })
-              );
-          }}
-        >
+        </div>
+        <div>
+          <label htmlFor="rating">Rating</label>
+          <input
+            type="number"
+            id="rating"
+            name="rating"
+            value={rating}
+            onChange={(e) => setRating(parseInt(e.target.value))}
+            required
+          />
+        </div>
+        <button type="submit" disabled={isPosting}>
           {isPosting ? "Posting..." : "Post"}
         </button>
-      </div>
+      </form>
     </div>
   );
-}
+};
+
+export default Page;

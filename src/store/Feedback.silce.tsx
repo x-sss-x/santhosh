@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { SupaClient } from "../../utils/supabase";
 
-export const viewFeedBack = createAsyncThunk<
+export const viewFeedback = createAsyncThunk<
   any,
   void,
   {
@@ -10,12 +10,12 @@ export const viewFeedBack = createAsyncThunk<
     };
   }
 >(
-  "/feedback/viewFeedBack",
+  "/feedback/viewFeedback",
   async (_payload, { fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await SupaClient.from("review")
-      .select("*,customer(customer_name)")
-      .order("created at")
+        .select("review_content,rating,Customer(customer_id,customer_name)")
+        .limit(10).order("created_at",{ascending:false})
       const data = response.data;
       return fulfillWithValue(data);
     } catch (e) {
@@ -27,8 +27,11 @@ export const viewFeedBack = createAsyncThunk<
 export const storeFeedback = createAsyncThunk<
   any,
   {
-    id: string;
     content: string;
+    rating: number;
+    service_id: string;   //foriegn key
+    customer_id: string;   //foriegn key
+
   },
   {
     rejectValue: {
@@ -39,15 +42,17 @@ export const storeFeedback = createAsyncThunk<
   "/feedback/storeFeedback",
   async (payload, { fulfillWithValue, rejectWithValue,dispatch }) => {
     try {
-      const response = await SupaClient.from("comments")
+      const response = await SupaClient.from("review")
         .insert({
-          content: payload.content,
-          usersId: payload.id,
+          review_content: payload.content,
+          customer_id: payload.customer_id,
+          rating:payload.rating,
+          service_id:payload.service_id,
         })
-        .select("*,customer(customer_name)")
+        .select("customer(customer_name)")
         .single();
       const data = response.data;
-      dispatch(viewFeedBack());
+      dispatch(viewFeedback());
       return fulfillWithValue(data);
     } catch (e) {
       return rejectWithValue({ msg: "Something went wrong !" });
@@ -69,26 +74,27 @@ const initialState: InitialStateProps = {
   isPosting: false,
 };
 
-export const feedbackSlice = createSlice({
+export const feedbackSclice = createSlice({
   name: "feedback",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(viewFeedBack.fulfilled, (state, { payload }) => {
+    builder.addCase(viewFeedback.fulfilled, (state, { payload }) => {
       state.data = payload;
       state.isLoading = false;
       state.error = null;
     });
-    builder.addCase(viewFeedBack.pending, (state) => {
+    builder.addCase(viewFeedback.pending, (state) => {
       state.isLoading = true;
       state.error = null;
     });
-    builder.addCase(viewFeedBack.rejected, (state, { payload }) => {
+    builder.addCase(viewFeedback.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload?.msg;
     });
 
     builder.addCase(storeFeedback.fulfilled, (state, { payload }) => {
+      state.data.push(payload);
       state.isPosting = false;
       state.error = null;
     });
