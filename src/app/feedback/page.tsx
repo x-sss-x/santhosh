@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect , useCallback, useState} from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useAppDispatch } from "../../../hooks";
 import { viewFeedback, storeFeedback } from "../../store/Feedback.silce";
@@ -16,54 +16,55 @@ const Page: React.FC = () => {
   const [content, setContent] = React.useState("");
   const [rating, setRating] = React.useState(0);
   const [username, setUsername] = useState<undefined | string>(undefined);
+  const [service_id, setService_id] = useState<undefined | string>("");
 
   const dispatch = useAppDispatch();
-  const params = useParams();
-  const params1 = useParams();
+  const customer_id="c68316b0-7f3c-4ad4-b1a1-e2516d33f458"
   
+const selected_service="enim"
+useEffect(()=>{
+  fetchUsername()
+  fetchService()
+},[])
 
-  
-  useEffect(() => {
-    fetchUsername();
-    fetchUsername2();
-    viewFeedback();
-
-  }, []);
-
-
-  
-  const fetchUsername2 = useCallback(async () => {
+  const fetchService = useCallback(async () => {
     const response = await SupaClient.from("service")
-      .select("service_name")
-      .eq("id", params.service_id)
-      .single();
-    setUsername(response.data?.service_name);
-  }, [params.service_id]);
+      .select("service_id")
+      .in("service_name", [selected_service]);
+    if (response.data && response.data.length > 0) {
+      setService_id(response.data[0].service_id);
+    }
+  }, [selected_service]);
+  
+  
 
   const fetchUsername = useCallback(async () => {
-    const response = await SupaClient.from("customer")
+    const response = await SupaClient.from("Customer")
       .select("customer_name")
-      .eq("id", params.customer_id)
+      .eq("id", customer_id)
       .single();
     setUsername(response.data?.customer_name);
-  }, [params.customer_id]);
+  }, [customer_id]);
 
+ 
 
+  // ...
+  
   const handleSubmit = () => {
     if (content) {
       dispatch(
         storeFeedback({
           content,
           rating,
-          service_id: params1.service_id, 
-          customer_id: params.cutomer_id, 
+          service_id: service_id || "", 
+          customer_id: customer_id, 
         })
       );
       setContent("");
       setRating(0);
     }
   };
-
+  
   return (
     <div>
       {isLoading && <p>Loading...</p>}
@@ -71,7 +72,7 @@ const Page: React.FC = () => {
 
       
 
-      <form onSubmit={handleSubmit}>
+      <form >
         <div>
           <label htmlFor="content">Content</label>
           <input
@@ -94,7 +95,7 @@ const Page: React.FC = () => {
             required
           />
         </div>
-        <button type="submit" disabled={isPosting}>
+        <button type="submit" disabled={isPosting} onClick={handleSubmit}>
           {isPosting ? "Posting..." : "Post"}
         </button>
       </form>

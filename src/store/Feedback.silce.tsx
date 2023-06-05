@@ -29,8 +29,8 @@ export const storeFeedback = createAsyncThunk<
   {
     content: string;
     rating: number;
-    service_id: string;   //foriegn key
-    customer_id: string;   //foriegn key
+    service_id: string;   
+    customer_id: string;   
 
   },
   {

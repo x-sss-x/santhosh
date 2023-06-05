@@ -1,10 +1,12 @@
+"use client"
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { useAppDispatch } from "../../../hooks";
 import { fetchServices, bookService } from "../../store/BookServiceProvider.slice";
 
 const BookingPage: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const services = useSelector((state: RootState) => state.booking.services);
   const isLoading = useSelector((state: RootState) => state.booking.isLoading);
   const error = useSelector((state: RootState) => state.booking.error);
@@ -44,21 +46,7 @@ const BookingPage: React.FC = () => {
       ) : (
         <div>
           <h2>Available Services</h2>
-          <ul>
-            {services.map((service) => (
-              <li key={service.id}>
-                <h3>{service.type}</h3>
-                <p>Date: {service.date}</p>
-                <button
-                  onClick={() =>
-                    handleBookService(service.id, "serviceProviderId", "customerId", "date", "time", "reason")
-                  }
-                >
-                  Book Service
-                </button>
-              </li>
-            ))}
-          </ul>
+          
         </div>
       )}
     </div>

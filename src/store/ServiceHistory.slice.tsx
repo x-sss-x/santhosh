@@ -19,25 +19,13 @@ const initialState: InitialStateProps = {
   error: null,
 };
 
-export const fetchServices = createAsyncThunk<any, { customer_id: string }, { rejectValue: { msg: string } }>(
-  "/ServiceHistory/fetchServices",
-  async (payload, { fulfillWithValue, rejectWithValue }) => {
-    try {
-      const response = await SupaClient.from("history").select("*");
-
-      const data = response.data;
-      return fulfillWithValue(data);
-    } catch (e) {
-      return rejectWithValue({ msg: "Something went wrong!" });
-    }
-  }
-);
-
-export const searchServicesByDate = createAsyncThunk<any, {}, { rejectValue: { msg: string } }>(
-  "/ServiceHistory/searchServicesByDate",
+export const pastHistoryOfCustomer = createAsyncThunk<any,void, { rejectValue: { msg: string } }>(
+  "/ServiceHistory/pastHistoryOfCustomer",
   async (_payload, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const response = await SupaClient.from("history").select("*").order("date", { ascending: false });
+      const response = await SupaClient.from("history").select("*,service(service_name)")
+      .eq("customer_id","0a1bf16b-4eed-445b-9e03-a5cef2f8bf0c")
+      .order("date", { ascending: false });
 
       const data = response.data;
       return fulfillWithValue(data);
@@ -47,12 +35,15 @@ export const searchServicesByDate = createAsyncThunk<any, {}, { rejectValue: { m
   }
 );
 
-export const searchServicesByType = createAsyncThunk<any, { type: string }, { rejectValue: { msg: string } }>(
-  "/ServiceHistory/searchServicesByType",
-  async (payload, { fulfillWithValue, rejectWithValue }) => {
+
+export const pastHistoryOfServiceProvider = createAsyncThunk<any,void, { rejectValue: { msg: string } }>(
+  "/ServiceHistory/pastHistoryOfServiceProvider",
+  async (_payload, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const response = await SupaClient.from("history").
-      select("*,Customer(customer_name)").eq("service_name", payload.type);
+      const response = await SupaClient.from("history").select("*,service(service_name)")
+      .eq("serviceprovider_id","0c1c000c-2f45-4b87-bebf-e6e2d2303b31")
+      .order("date", { ascending: false });
+
       const data = response.data;
       return fulfillWithValue(data);
     } catch (e) {
@@ -60,6 +51,28 @@ export const searchServicesByType = createAsyncThunk<any, { type: string }, { re
     }
   }
 );
+
+
+
+
+export const serviceProviderHistoryOfToday = createAsyncThunk<any,void, { rejectValue: { msg: string } }>(
+  "/ServiceHistory/serviceProviderHistoryOfToday",
+  async (_payload, { fulfillWithValue, rejectWithValue }) => {
+    try {
+ 
+      const response = await SupaClient.from("history").select("service(service_name)")
+      .eq("serviceprovider_id","c68316b0-7f3c-4ad4-b1a1-e2516d33f458")
+      .gte("date","CURRENT_DATE")
+
+      const data = response.data;
+      return fulfillWithValue(data);
+    } catch (e) {
+      return rejectWithValue({ msg: "Something went wrong!" });
+    }
+  }
+);
+
+
 
 export const ServiceHistory = createSlice({
   name: "ServiceHistory",
@@ -67,42 +80,42 @@ export const ServiceHistory = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchServices.pending, (state) => {
+      .addCase(pastHistoryOfCustomer.fulfilled, (state, { payload }) => {
+        state.data = payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(pastHistoryOfCustomer.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload?.msg;
+      })
+      .addCase(pastHistoryOfCustomer.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(fetchServices.fulfilled, (state, { payload }) => {
+      .addCase(pastHistoryOfServiceProvider.fulfilled, (state, { payload }) => {
         state.data = payload;
         state.isLoading = false;
         state.error = null;
       })
-      .addCase(fetchServices.rejected, (state, { payload }) => {
+      .addCase(pastHistoryOfServiceProvider.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload?.msg;
       })
-      .addCase(searchServicesByType.pending, (state) => {
+      .addCase(pastHistoryOfServiceProvider.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(searchServicesByType.fulfilled, (state, { payload }) => {
+      .addCase(serviceProviderHistoryOfToday.fulfilled, (state, { payload }) => {
         state.data = payload;
         state.isLoading = false;
         state.error = null;
       })
-      .addCase(searchServicesByType.rejected, (state, { payload }) => {
+      .addCase(serviceProviderHistoryOfToday.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload?.msg;
       })
-      .addCase(searchServicesByDate.fulfilled, (state, { payload }) => {
-        state.data = payload;
-        state.isLoading = false;
-        state.error = null;
-      })
-      .addCase(searchServicesByDate.rejected, (state, { payload }) => {
-        state.isLoading = false;
-        state.error = payload?.msg;
-      })
-      .addCase(searchServicesByDate.pending, (state) => {
+      .addCase(serviceProviderHistoryOfToday.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       });

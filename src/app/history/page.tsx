@@ -1,31 +1,52 @@
 "use client";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchServices, searchServicesByType, searchServicesByDate } from "../../store/ServiceHistory.slice";
+import React from "react";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../../../hooks";
+import {
+  pastHistoryOfCustomer,
+  pastHistoryOfServiceProvider,
+  serviceProviderHistoryOfToday,
+} from "../../store/ServiceHistory.slice";
 import { RootState } from "../../store";
 
 const PageComponent: React.FC = () => {
-  const dispatch = useDispatch();
-  const { data, isLoading, error } = useSelector((state: RootState) => state.ServiceHistory);
-
-  useEffect(() => {
-    dispatch(fetchServices({ customer_id: "nnn" }) as any);
-    dispatch(searchServicesByType({ type: "enim" }) as any);
-    dispatch(searchServicesByDate({}) as any);
-  }, [dispatch]);
+  const dispatch = useAppDispatch();
+  const { isLoading, error } = useSelector(
+    (state: RootState) => state.ServiceHistory
+  );
 
   return (
     <div>
+      <h4>Customer</h4>
+      <button
+        className="m-4 bg-blue-400 w-40"
+        onClick={() => {
+          dispatch(pastHistoryOfCustomer());
+        }}
+      >
+        past services
+      </button>
+      <h4>service provider</h4>
+      <button
+        className="m-4 bg-blue-400 w-40"
+        onClick={() => {
+          dispatch(pastHistoryOfServiceProvider());
+        }}
+      >
+        past services
+      </button>
+ 
+      <button
+        className="m-4 bg-blue-400 w-40"
+        onClick={() => {
+          dispatch(serviceProviderHistoryOfToday());
+        }}
+      >
+        today
+      </button>
       {isLoading && <div>Loading...</div>}
 
       {error && <div>Error: {error}</div>}
-
-      {data.map((service) => (
-        <div key={service.id}>
-          <span>Type: {service.type}</span>
-          <span>Date: {service.date}</span>
-        </div>
-      ))}
     </div>
   );
 };
