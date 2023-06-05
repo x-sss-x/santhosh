@@ -69,7 +69,6 @@ async function main() {
       data: {
         reasons_for_rejecting: faker.lorem.sentence(),
         date: faker.date.future(),
-        time: faker.date.future(),
         serviceprovider_id: serviceProvider.serviceprovider_id,
         customer_id: customer.customer_id,
         service_id: service.service_id,

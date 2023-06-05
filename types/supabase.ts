@@ -94,7 +94,6 @@ export interface Database {
           reasons_for_rejecting: string
           service_id: string
           serviceprovider_id: string
-          time: string
         }
         Insert: {
           booking_id?: string
@@ -103,7 +102,6 @@ export interface Database {
           reasons_for_rejecting: string
           service_id: string
           serviceprovider_id: string
-          time: string
         }
         Update: {
           booking_id?: string
@@ -112,7 +110,6 @@ export interface Database {
           reasons_for_rejecting?: string
           service_id?: string
           serviceprovider_id?: string
-          time?: string
         }
       }
       review: {

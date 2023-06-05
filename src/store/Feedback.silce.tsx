@@ -44,12 +44,12 @@ export const storeFeedback = createAsyncThunk<
     try {
       const response = await SupaClient.from("review")
         .insert({
-          review_content: payload.content,
-          customer_id: payload.customer_id,
-          rating:payload.rating,
-          service_id:payload.service_id,
+          review_content: 'agdjjhcjhavjcvjjv', //payload.content,
+          customer_id: "e238207a-b30e-49e3-8d69-f7e6848fe813", //payload.customer_id,
+          rating:1 ,
+          service_id:"48da29e7-1f9e-448f-b7b2-6557dffd6387" 
         })
-        .select("customer(customer_name)")
+        .select("review_content,rating,Customer(customer_name)")
         .single();
       const data = response.data;
       dispatch(viewFeedback());

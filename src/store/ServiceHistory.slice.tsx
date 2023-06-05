@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { SupaClient } from "../../utils/supabase";
+import { log } from "console";
 
 interface Service {
   id: string;
@@ -59,10 +60,12 @@ export const serviceProviderHistoryOfToday = createAsyncThunk<any,void, { reject
   "/ServiceHistory/serviceProviderHistoryOfToday",
   async (_payload, { fulfillWithValue, rejectWithValue }) => {
     try {
- 
+
+
+
       const response = await SupaClient.from("history").select("service(service_name)")
-      .eq("serviceprovider_id","c68316b0-7f3c-4ad4-b1a1-e2516d33f458")
-      .gte("date","CURRENT_DATE")
+      .eq("serviceprovider_id","d28a47b3-9ad5-472b-a80a-4db3e363bb27")
+      .eq("date","2023-06-04")
 
       const data = response.data;
       return fulfillWithValue(data);
