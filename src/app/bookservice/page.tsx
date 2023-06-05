@@ -33,7 +33,6 @@ const BookingPage: React.FC = () => {
     dispatch(
       loadRequest({
         reasons_for_rejecting: "gdhtssgxgduy",
-        date: new Date("2023-06-05"),
         serviceprovider_id: "8faf114c-a77c-4652-8ecd-5d495464b543",
         customer_id: "a3e35f0b-1db6-4811-9e59-7f20093e63aa",
         service_id: "122a675e-8b91-47c0-8460-08b617139226",
