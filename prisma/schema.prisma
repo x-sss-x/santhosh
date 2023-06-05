@@ -36,6 +36,7 @@ model Serviceprovider {
   service_name                    String
   searchhistory                   history[]
   service                         service[]
+  review                          review[]
 
   request request[]
 }
@@ -69,13 +70,15 @@ model review {
   rating         Float
   review_content String
   created_at     DateTime @default(dbgenerated("now()")) @db.Timestamptz()
+  serviceProvider         Serviceprovider @relation(fields: [serviceprovider_id], references: [serviceprovider_id])
+  serviceprovider_id String
 }
 
 model request {
   booking_id            String          @id @default(dbgenerated("gen_random_uuid()"))
   reasons_for_rejecting String
+  status                String
   date                  DateTime
-  time                  DateTime
   serviceprovider       Serviceprovider @relation(fields: [serviceprovider_id], references: [serviceprovider_id])
   serviceprovider_id    String
   customer              Customer        @relation(fields: [customer_id], references: [customer_id])

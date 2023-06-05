@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { SupaClient } from "../../utils/supabase";
+import ServiceProviderStories from "@/stories/ServiceProvider.stories";
 
 export const viewFeedback = createAsyncThunk<
   any,
@@ -40,14 +41,15 @@ export const storeFeedback = createAsyncThunk<
   }
 >(
   "/feedback/storeFeedback",
-  async (payload, { fulfillWithValue, rejectWithValue,dispatch }) => {
+  async (_payload, { fulfillWithValue, rejectWithValue,dispatch }) => {
     try {
       const response = await SupaClient.from("review")
         .insert({
           review_content: 'agdjjhcjhavjcvjjv', //payload.content,
           customer_id: "e238207a-b30e-49e3-8d69-f7e6848fe813", //payload.customer_id,
           rating:1 ,
-          service_id:"48da29e7-1f9e-448f-b7b2-6557dffd6387" 
+          service_id:"48da29e7-1f9e-448f-b7b2-6557dffd6387" ,
+          serviceprovider_id:""
         })
         .select("review_content,rating,Customer(customer_name)")
         .single();

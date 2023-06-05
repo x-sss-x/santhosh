@@ -62,6 +62,7 @@ async function main() {
         service_id: service.service_id,
         rating: faker.datatype.float({ min: 1, max: 5, precision: 0.1 }),
         review_content: faker.lorem.sentences(),
+        serviceprovider_id: serviceProvider.serviceprovider_id
       },
     });
 
@@ -72,6 +73,7 @@ async function main() {
         serviceprovider_id: serviceProvider.serviceprovider_id,
         customer_id: customer.customer_id,
         service_id: service.service_id,
+        status:faker.lorem.sentence(),
       },
     });
   }

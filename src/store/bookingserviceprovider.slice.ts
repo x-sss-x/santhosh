@@ -21,7 +21,9 @@ interface Service {
   cancelreason:string;
 }
 
-interface ServiceProps extends Omit<Service,'id '| 'providerstatus' | 'cancelreason' | 'serviceType' | 'requestid'  >
+interface ServiceProps extends Omit<Service,'id '| 'providerstatus' | 'cancelreason' | 'serviceType' | 'requestid'  >{
+  
+}
 
 const initialState: InitialStateProps = {
   searchResults: [],
@@ -144,7 +146,7 @@ export const listServices = createAsyncThunk<
     async ( payload, { fulfillWithValue, rejectWithValue } ) => {
       try {
         const response = await SupaClient.from('Serviceprovider ')
-        .select('*').eq('service_name', payload.serviceType ); 
+        .select('*').eq('serviceser_name', payload.serviceType ); 
 
         const data = response.data;
         return fulfillWithValue(data);
@@ -200,7 +202,7 @@ export const listServices = createAsyncThunk<
 
   export const loadRequest = createAsyncThunk<
   any,
-  ServiceProps,
+    {reasons_for_rejecting:string,serviceprovider_id:string,customer_id:string,service_id:string,status:string},
   {
     rejectValue: {
       msg: string;
@@ -210,7 +212,7 @@ export const listServices = createAsyncThunk<
     async ( payload, { fulfillWithValue, rejectWithValue } ) => {
       try {
         const response = await SupaClient.from('request')
-        .insert({reasons_for_rejecting: '-', date:"2023-08-5", serviceprovider_id: payload.serviceproviderid, customer_id: payload.customerid, service_id: payload.serviceid  })
+        .insert({reasons_for_rejecting: '-', date:"2023-08-5", serviceprovider_id: payload.serviceprovider_id, customer_id: payload.customer_id, service_id: payload.service_id ,status:"cancelled" })
 
         const data = response.data;
         return fulfillWithValue({ msg: "Request Added  Successfully" });
@@ -271,7 +273,7 @@ export const listServices = createAsyncThunk<
   export const cancelRequest = createAsyncThunk<
   any,
   {
-    requestid:string,
+    id:string,
    cancelreason:string},
   {
     rejectValue: {

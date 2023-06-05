@@ -94,6 +94,7 @@ export interface Database {
           reasons_for_rejecting: string
           service_id: string
           serviceprovider_id: string
+          status: string
         }
         Insert: {
           booking_id?: string
@@ -102,6 +103,7 @@ export interface Database {
           reasons_for_rejecting: string
           service_id: string
           serviceprovider_id: string
+          status: string
         }
         Update: {
           booking_id?: string
@@ -110,6 +112,7 @@ export interface Database {
           reasons_for_rejecting?: string
           service_id?: string
           serviceprovider_id?: string
+          status?: string
         }
       }
       review: {
@@ -120,6 +123,7 @@ export interface Database {
           review_content: string
           review_id: string
           service_id: string
+          serviceprovider_id: string
         }
         Insert: {
           created_at?: string
@@ -128,6 +132,7 @@ export interface Database {
           review_content: string
           review_id?: string
           service_id: string
+          serviceprovider_id: string
         }
         Update: {
           created_at?: string
@@ -136,6 +141,7 @@ export interface Database {
           review_content?: string
           review_id?: string
           service_id?: string
+          serviceprovider_id?: string
         }
       }
       service: {
