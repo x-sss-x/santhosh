@@ -66,6 +66,8 @@ async function main() {
       },
     });
 
+    
+
     const request = await prisma.request.create({
       data: {
         reasons_for_rejecting: faker.lorem.sentence(),
@@ -73,7 +75,7 @@ async function main() {
         serviceprovider_id: serviceProvider.serviceprovider_id,
         customer_id: customer.customer_id,
         service_id: service.service_id,
-        status:faker.lorem.sentence(),
+        status:'cancelled'
       },
     });
   }

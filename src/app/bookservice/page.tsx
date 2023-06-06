@@ -26,10 +26,10 @@ const BookingPage: React.FC = () => {
   );
 
   useEffect(() => {
-    dispatch(viewserviceprovider({ id: "50053828" }));
-    dispatch(listServices({ serviceType: "50053828" }));
-    dispatch(loadReviews({ id: "50053828" }));
-    dispatch(loadReviews({ id: "50053828" }));
+    // dispatch(viewserviceprovider({ id: "8faf114c-a77c-4652-8ecd-5d495464b543" }));
+    // dispatch(listServices({ serviceType: "labore" }));
+    // dispatch(loadReviews({ id: "8faf114c-a77c-4652-8ecd-5d495464b543" }));
+    // dispatch(loadReviews({ id: "8faf114c-a77c-4652-8ecd-5d495464b543" }));
     dispatch(
       loadRequest({
         reasons_for_rejecting: "gdhtssgxgduy",
@@ -39,11 +39,11 @@ const BookingPage: React.FC = () => {
         status: "cancelled"
       })
     );
-    dispatch(
-      cancelRequest({ id: "56090909098", cancelreason: "wuehfesjhbsjbvjh" })
-    );
-    dispatch(retrieveRequests({ id: "48798703089843" }));
-    dispatch(respondToRequest({ id: "38389291", providerstatus: "848484857" }));
+    // dispatch(
+    //   cancelRequest({ id: "6e03e02f-b0c8-44be-b5ac-d8b836bccaec", cancelreason: "wuehfesjhbsjbvjh" })
+    // );
+    // dispatch(retrieveRequests({ id: "8faf114c-a77c-4652-8ecd-5d495464b543" }));
+    // dispatch(respondToRequest({ id: "8faf114c-a77c-4652-8ecd-5d495464b543", providerstatus: "canclled" }));
   }, [dispatch]);
 
   return (

@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { SupaClient } from "../../utils/supabase";
 
 interface InitialStateProps {
@@ -9,21 +9,23 @@ interface InitialStateProps {
 }
 
 interface Service {
-  id: number,
-  serviceType: string,
-  booking_id: string,
-  date: Date,
-  serviceproviderid: string,
-  customerid: string,
-  serviceid: string, 
-  requestid:string,
-  providerstatus:string,
-  cancelreason:string;
+  id: number;
+  serviceType: string;
+  booking_id: string;
+  date: Date;
+  serviceproviderid: string;
+  customerid: string;
+  serviceid: string;
+  requestid: string;
+  providerstatus: string;
+  cancelreason: string;
 }
 
-interface ServiceProps extends Omit<Service,'id '| 'providerstatus' | 'cancelreason' | 'serviceType' | 'requestid'  >{
-  
-}
+interface ServiceProps
+  extends Omit<
+    Service,
+    "id " | "providerstatus" | "cancelreason" | "serviceType" | "requestid"
+  > {}
 
 const initialState: InitialStateProps = {
   searchResults: [],
@@ -33,264 +35,292 @@ const initialState: InitialStateProps = {
 };
 
 export const bookingService = createSlice({
-    name: 'bookingServiceProvider',
-    initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-      builder.addCase(listServices.pending, (state) => {
-          state.isLoading = true;
-          state.error = null;
-        })
-        builder.addCase(listServices.fulfilled, (state, {payload}) => {
-          state.isLoading = false;
-          state.searchResults = payload;
-        })
-        builder.addCase(listServices.rejected, (state, {payload}) => {
-          state.isLoading = false;
-          state.error = payload?.msg;
-        });
+  name: "bookingServiceProvider",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(listServices.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(listServices.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.searchResults = payload;
+    });
+    builder.addCase(listServices.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload?.msg;
+    });
 
-        builder.addCase(viewserviceprovider.pending, (state) => {
-            state.isLoading = true;
-            state.error = null;
-          })
-          builder.addCase(viewserviceprovider.fulfilled, (state, {payload}) => {
-            state.isLoading = false;
-            state.searchResults = payload;
-          })
-          builder.addCase(viewserviceprovider.rejected, (state, {payload}) => {
-            state.isLoading = false;
-            state.error = payload?.msg;
-          });
+    builder.addCase(viewserviceprovider.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(viewserviceprovider.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.searchResults = payload;
+    });
+    builder.addCase(viewserviceprovider.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload?.msg;
+    });
 
-          builder.addCase(loadReviews.pending, (state) => {
-            state.isLoading = true;
-            state.error = null;
-          })
-          builder.addCase(loadReviews.fulfilled, (state, {payload}) => {
-            state.isLoading = false;
-            state.searchResults = payload;
-          })
-          builder.addCase(loadReviews.rejected, (state, {payload}) => {
-            state.isLoading = false;
-            state.error = payload?.msg;
-          });
+    builder.addCase(loadReviews.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(loadReviews.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.searchResults = payload;
+    });
+    builder.addCase(loadReviews.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload?.msg;
+    });
 
-          builder.addCase(loadRequest.pending, (state) => {
-            state.isLoading = true;
-            state.error = null;
-          })
-          builder.addCase(loadRequest.fulfilled, (state, {payload}) => {
-            state.isLoading = false;
-            state.success = payload?.msg;
-          })
-          builder.addCase(loadRequest.rejected, (state, {payload}) => {
-            state.isLoading = false;
-            state.error = payload?.msg;
-          });
+    builder.addCase(loadRequest.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(loadRequest.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.success = payload?.msg;
+    });
+    builder.addCase(loadRequest.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload?.msg;
+    });
 
+    builder.addCase(retrieveRequests.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(retrieveRequests.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.searchResults = payload;
+    });
+    builder.addCase(retrieveRequests.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload?.msg;
+    });
 
+    builder.addCase(respondToRequest.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(respondToRequest.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.success = payload?.msg;
+    });
+    builder.addCase(respondToRequest.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload?.msg;
+    });
 
-          builder.addCase(retrieveRequests.pending, (state) => {
-            state.isLoading = true;
-            state.error = null;
-          })
-          builder.addCase(retrieveRequests.fulfilled, (state, {payload}) => {
-            state.isLoading = false;
-            state.searchResults = payload;
-          })
-          builder.addCase(retrieveRequests.rejected, (state, {payload}) => {
-            state.isLoading = false;
-            state.error = payload?.msg;
-          });
-
-          builder.addCase(respondToRequest.pending, (state) => {
-            state.isLoading = true;
-            state.error = null;
-          })
-          builder.addCase(respondToRequest.fulfilled, (state, {payload}) => {
-            state.isLoading = false;
-            state.success = payload?.msg;
-          })
-          builder.addCase(respondToRequest.rejected, (state, {payload}) => {
-            state.isLoading = false;
-            state.error = payload?.msg;
-          });
-
-          builder.addCase(cancelRequest.pending, (state) => {
-            state.isLoading = true;
-            state.error = null;
-          })
-          builder.addCase(cancelRequest.fulfilled, (state, {payload}) => {
-            state.isLoading = false;
-            state.success = payload?.msg;
-          })
-          builder.addCase(cancelRequest.rejected, (state, {payload}) => {
-            state.isLoading = false;
-            state.error = payload?.msg;
-          });
-
-
-    },
-  });
+    builder.addCase(cancelRequest.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(cancelRequest.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.success = payload?.msg;
+    });
+    builder.addCase(cancelRequest.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload?.msg;
+    });
+  },
+});
 
 export const listServices = createAsyncThunk<
   any,
-  {serviceType:string},
+  { serviceType: string },
   {
     rejectValue: {
       msg: string;
     };
   }
->("/bookingServiceProvider/listServices",
-    async ( payload, { fulfillWithValue, rejectWithValue } ) => {
-      try {
-        const response = await SupaClient.from('Serviceprovider ')
-        .select('*').eq('serviceser_name', payload.serviceType ); 
+>(
+  "/bookingServiceProvider/listServices",
+  async (payload, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const response = await SupaClient.from("Serviceprovider")
+        .select("*")
+        .eq("service_name", payload.serviceType);
 
-        const data = response.data;
-        return fulfillWithValue(data);
-      } catch (e) {
-        return rejectWithValue({ msg: "Something went wrong !" });
-      }          
-      }
-  );
+      const data = response.data;
+      return fulfillWithValue(data);
+    } catch (e) {
+      return rejectWithValue({ msg: "Something went wrong !" });
+    }
+  }
+);
 
-  export const viewserviceprovider = createAsyncThunk<
+export const viewserviceprovider = createAsyncThunk<
   any,
-  {id:string},
+  { id: string },
   {
     rejectValue: {
       msg: string;
     };
   }
->("/bookingServiceProvider/viewserviceprovider",
-    async ( payload, { fulfillWithValue, rejectWithValue } ) => {
-      try {
-        const response = await SupaClient.from('Serviceprovider ')
-        .select('*').eq('serviceprovider_id', payload.id ); 
+>(
+  "/bookingServiceProvider/viewserviceprovider",
+  async (payload, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const response = await SupaClient.from("Serviceprovider")
+        .select("*")
+        .eq("serviceprovider_id", payload.id);
 
-        const data = response.data;
-        return fulfillWithValue(data);
-      } catch (e) {
-        return rejectWithValue({ msg: "Something went wrong !" });
-      }          
-      }
-  );
+      const data = response.data;
 
-  export const loadReviews = createAsyncThunk<
+      console.log(data);
+      return fulfillWithValue(data);
+    } catch (e) {
+      return rejectWithValue({ msg: "Something went wrong !" });
+    }
+  }
+);
+
+export const loadReviews = createAsyncThunk<
   any,
-  {id:string},
+  { id: string },
   {
     rejectValue: {
       msg: string;
     };
   }
->("/bookingServiceProvider/loadReviews",
-    async ( payload, { fulfillWithValue, rejectWithValue } ) => {
-      try {
-        const response = await SupaClient.from('review')
-        .select('*').eq('serviceprovider_id', payload.id ); 
+>(
+  "/bookingServiceProvider/loadReviews",
+  async (payload, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const response = await SupaClient.from("review")
+        .select("*")
+        .eq("serviceprovider_id", payload.id);
 
-        const data = response.data;
-        return fulfillWithValue(data);
-      } catch (e) {
-        return rejectWithValue({ msg: "No ReviewS yet for the service provider!" });
-      }          
-      }
-  );
+      const data = response.data;
+      return fulfillWithValue(data);
+    } catch (e) {
+      return rejectWithValue({
+        msg: "No ReviewS yet for the service provider!",
+      });
+    }
+  }
+);
 
-  export const loadRequest = createAsyncThunk<
+export const loadRequest = createAsyncThunk<
   any,
-    {reasons_for_rejecting:string,serviceprovider_id:string,customer_id:string,service_id:string,status:string},
+  {
+    reasons_for_rejecting: string;
+    serviceprovider_id: string;
+    customer_id: string;
+    service_id: string;
+    status: string;
+  },
   {
     rejectValue: {
       msg: string;
     };
   }
->("/bookingServiceProvider/loadRequest",
-    async ( payload, { fulfillWithValue, rejectWithValue } ) => {
-      try {
-        const response = await SupaClient.from('request')
-        .insert({reasons_for_rejecting: '-', date:"2023-08-5", serviceprovider_id: payload.serviceprovider_id, customer_id: payload.customer_id, service_id: payload.service_id ,status:"cancelled" })
+>(
+  "/bookingServiceProvider/loadRequest",
+  async (payload, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const response = await SupaClient.from("request").insert({
+        reasons_for_rejecting: "-abcd",
+        date: "2023-08-5",
+        serviceprovider_id: payload.serviceprovider_id,
+        customer_id: payload.customer_id,
+        service_id: payload.service_id,
+        status: "cancelled",
+      }).select();
 
-        const data = response.data;
-        return fulfillWithValue({ msg: "Request Added  Successfully" });
-        //dispatch(listServices({service_name:  Service.serviceType}));
-      } catch (e) {
-        return rejectWithValue({ msg: "Something went wrong!" });
-      }          
-      }
-  );
+      const data = response.data;
+      console.log(data)
+      return fulfillWithValue({ msg: "Request Added  Successfully" });
+      //        dispatch(listServices({service_name:  Service.serviceType}));
+    } catch (e) {
+      return rejectWithValue({ msg: "Something went wrong!" });
+    }
+  }
+);
 
-
-  export const retrieveRequests = createAsyncThunk<
+export const retrieveRequests = createAsyncThunk<
   any,
-  {id:string},
+  { id: string },
   {
     rejectValue: {
       msg: string;
     };
   }
->("/bookingServiceProvider/retrieveRequests",
-    async ( payload, { fulfillWithValue, rejectWithValue } ) => {
-      try {
-        const response = await SupaClient.from('requests')
-        .select('*').eq('serviceprovider_id', payload.id ); 
+>(
+  "/bookingServiceProvider/retrieveRequests",
+  async (payload, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const response = await SupaClient.from("request")
+        .select("*")
+        .eq("serviceprovider_id", payload.id);
 
-        const data = response.data;
-        return fulfillWithValue(data);
-      } catch (e) {
-        return rejectWithValue({ msg: "No ReviewS yet for the service provider!" });
-      }          
-      }
-  );
+      const data = response.data;
+      return fulfillWithValue(data);
+    } catch (e) {
+      return rejectWithValue({
+        msg: "No ReviewS yet for the service provider!",
+      });
+    }
+  }
+);
 
-  export const respondToRequest = createAsyncThunk<
+export const respondToRequest = createAsyncThunk<
   any,
-  {id:string,
-    providerstatus:string},
+  { id: string; providerstatus: string },
   {
     rejectValue: {
       msg: string;
     };
   }
->("/bookingServiceProvider/respondToRequest",
-    async ( payload, { fulfillWithValue, rejectWithValue } ) => {
-      try {
-        const response = await SupaClient.from('requests')
+>(
+  "/bookingServiceProvider/respondToRequest",
+  async (payload, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const response = await SupaClient.from("request")
         .update({ status: payload.providerstatus })
-        .eq('booking_id ', payload.id) 
+        .eq("booking_id ", payload.id);
 
-        const data = response.data;
-        return fulfillWithValue({ msg: "Service Updated Successfully!" });
-      } catch (e) {
-        return rejectWithValue({ msg: "Something went wrong!" });
-      }          
-      }
-  );
+      const data = response.data;
+      return fulfillWithValue({ msg: "Service Updated Successfully!" });
+    } catch (e) {
+      return rejectWithValue({ msg: "Something went wrong!" });
+    }
+  }
+);
 
-  export const cancelRequest = createAsyncThunk<
+export const cancelRequest = createAsyncThunk<
   any,
   {
-    id:string,
-   cancelreason:string},
+    id: string;
+    cancelreason: string;
+  },
   {
     rejectValue: {
       msg: string;
     };
   }
->("/bookingServiceProvider/cancelRequest",
-    async ( payload, { fulfillWithValue, rejectWithValue } ) => {
-      try {
-        const response = await SupaClient.from('requests')
-        .update({ status: 'CANCELLED' , reasons_for_rejecting : payload.cancelreason})
-        .eq('booking_id ', payload.id) 
+>(
+  "/bookingServiceProvider/cancelRequest",
+  async (payload, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const response = await SupaClient.from("request")
+        .update({
+          status: "CANCELLED",
+          reasons_for_rejecting: payload.cancelreason,
+        })
+        .eq("booking_id ", payload.id);
 
-        const data = response.data;
-        return fulfillWithValue({ msg: "Service Cancelled Successfully!" });
-      } catch (e) {
-        return rejectWithValue({ msg: "Something went wrong!" });
-      }          
-      }
-  );
+      const data = response.data;
+      return fulfillWithValue({ msg: "Service Cancelled Successfully!" });
+    } catch (e) {
+      return rejectWithValue({ msg: "Something went wrong!" });
+    }
+  }
+);
