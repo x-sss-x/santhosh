@@ -1,6 +1,6 @@
 "use client"
 import Header from "@/components/Header";
-import Logo from "../../../public/Images/Header/Logo.png";
+import Logo from "../../../../public/Images/Header/Logo.png";
 
 export default function RootLayout({
   children,

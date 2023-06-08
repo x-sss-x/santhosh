@@ -4,7 +4,7 @@ import { VariantProps, cva } from 'class-variance-authority';
 export type ButtonProps = VariantProps<typeof buttonStyles>;
 
 export const buttonStyles = cva(
-  'w-96 xs:w-48 px-5 py-2 flex items-center justify-center sm:text-lg md:text-xl lg:text-xl font-bold shadow-sm rounded-xl',
+  'w-96 xs:w-48 px-5 py-2 flex items-center justify-center sm:text-lg md:text-xl lg:text-xl font-bold shadow-sm rounded-xl mx-auto',
   {
     variants: {
       intent: {
