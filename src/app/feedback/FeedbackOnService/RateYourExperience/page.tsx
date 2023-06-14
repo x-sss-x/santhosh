@@ -5,6 +5,7 @@ import fullStarImage from "../../../../../public/Images/Review/star-filled.png";
 import halfStarImage from "../../../../../public/Images/Review/star-half-filled.png";
 import Button from "@/components/Button";
 import { useState } from "react";
+import Link from "next/link";
 
 const YourComponent: React.FC = () => {
   const [selectedButtons, setSelectedButtons] = useState<string[]>([]);
@@ -107,7 +108,8 @@ const YourComponent: React.FC = () => {
             />
           </label>
         </div>
-        <Button>POST</Button>
+        <Link href="./feedback/FeedbackOnService/feedBackPosted">
+        <Button>POST</Button></Link>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import { RiCheckboxCircleFill } from "react-icons/ri";
 
 export type FeedBackSuccessProps = VariantProps<typeof feedbackSuccessStyles>;
 
-export const feedbackSuccessStyles = cva("flex flex-col w-1/2 h-60 xs:w-64 items-center rounded-xl justify-center bg-zinc-500", {
+export const feedbackSuccessStyles = cva("flex flex-col w-1/2 h-60 xs:w-64 items-center rounded-xl justify-center bg-zinc-500 m-auto", {
   variants: {
     size: {
       default: "",

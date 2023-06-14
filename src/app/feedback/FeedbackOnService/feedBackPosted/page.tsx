@@ -3,7 +3,8 @@ import profile from "../../../../../public/Images/Profile/profile.png"
 const PostedFeedback: React.FC = () => {
   return (
     <div>
-      <h1>Reviews</h1>
+      <div className="m-3">
+
       <Review
         icon={profile}
         name="John Doe"
@@ -12,6 +13,7 @@ const PostedFeedback: React.FC = () => {
         rating={4.5}
         reviewText="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus condimentum ullamcorper ante ut pharetra."
       />
+      </div>
     
     </div>
   );

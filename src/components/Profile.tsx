@@ -15,7 +15,6 @@ interface ProfileExtendedProps extends ProfileProps {
   imageSrc: StaticImageData;
   text: string;
   id_no: number;
-  onClick: () => void; 
 }
 
 const Profile = ({ imageSrc, text,id_no, ...props }: ProfileExtendedProps) => {
@@ -25,8 +24,8 @@ const Profile = ({ imageSrc, text,id_no, ...props }: ProfileExtendedProps) => {
         <Image src={imageSrc} alt="Profile Image" className=" w-24 h-24 xs:w-16 xs:h-16" />
       </div>
       <div>
-        <p className="text-center ml-8 text-gray-600 bold">{text} </p>
-        <p className="text-center ml-8 text-gray-500">{id_no}</p>
+        <p className="text-center ml-16  bold">{text} </p>
+        <p className="text-center ml-16">{id_no}</p>
       </div>
     </div>
    

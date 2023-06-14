@@ -43,7 +43,6 @@ var ServiceProviders = () => {
             id_no={item.id}
             text={item.name}
             imageSrc={ProfileIcon}
-            onClick={() => handleProviderClick(item.name, item.id)}
           />
         </div>
       ))}
