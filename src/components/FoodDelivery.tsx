@@ -2,7 +2,7 @@ import { cva} from 'class-variance-authority';
 import Image from 'next/image';
 import foodDeliveryImage from '../../public/Images/Icons/food-delivery.png';
 
-const FoodDeliveryButtonStyle = cva('flex flex-col items-center justify-center bg-zinc-300 h-107 w-107 py-4 px-4');
+const FoodDeliveryButtonStyle = cva('flex flex-col items-center justify-center bg-zinc-300 xs:w-32 h-32 w-80 py-4 px-4');
 
 interface FoodDeliveryProps {
   text: string;

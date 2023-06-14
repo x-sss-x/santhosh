@@ -6,7 +6,7 @@ const CreateAccount = () => {
   return (
         <div>
 
-              <div className="mt-6">
+              <div className="mt-4">
               <Input inputVariant="email" placeholder="email@gmail.com" />
               </div>
               <div className="m-3">

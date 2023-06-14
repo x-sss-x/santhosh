@@ -17,7 +17,8 @@ export const buttonStyles = cva(
           'bg-red-800 text-white hover:bg-red-400 hover:text-black transition-all duration-75 ',
           feedback:
           'bg-stone-200 border-sky-600 border-2 rounded-xl font-bold text-neutral-400 p-3',
-
+          options:
+          'bg-stone-200 border-sky-600 border-2 rounded-2xl font-bold text-neutral-400 p-3',
       },
     },
     defaultVariants: {

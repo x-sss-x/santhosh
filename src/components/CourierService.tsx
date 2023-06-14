@@ -2,7 +2,7 @@ import { cva } from 'class-variance-authority';
 import Image from 'next/image';
 import courierServiceImage from '../../public/Images/Icons/courier-service.png';
 
-const CourierServiceButtonStyle = cva('flex flex-col items-center justify-center bg-zinc-300 h-107 w-107 py-4 px-4');
+const CourierServiceButtonStyle = cva('flex flex-col items-center justify-center bg-zinc-300 h-32 w-80 xs:w-32 py-4 px-4');
 
 interface CourierServiceProps {
   text: string;

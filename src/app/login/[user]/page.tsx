@@ -1,7 +1,7 @@
 import Input from "@/components/Input";
 import LoginWithGoogle from "@/components/LoginWithGoogle";
 import Button from "@/components/Button";
-
+import Link from "next/link";
 const Login = () => {
   return (
     <div>
@@ -22,19 +22,24 @@ const Login = () => {
         <Button> Sign up</Button>
       </div>
       <h2 className="text-center text-xl m-2"> or </h2>
-      <div className="">
-      <LoginWithGoogle />
+      <div className="" >
+      <LoginWithGoogle/>
+      <Link href="../forgotPassword/" >
       <p className="ml-28 text-center text-sm text-sky-600 mb-4">
         forgot password?
       </p>
+      </Link>
+
       </div>
       <div>
       <h1 className="font-bold text-lg text-center">
         Dont have an account?
       </h1>
+      <Link href="../createAccount/">
       <h3 className=" text-center text-md text-sky-600">
             sign up
       </h3>
+      </Link>
       </div>
     </div>
 

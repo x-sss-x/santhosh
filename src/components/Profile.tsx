@@ -3,7 +3,7 @@ import Image, { StaticImageData } from "next/image";
 
 export type ProfileProps = VariantProps<typeof profileStyles>;
 
-export const profileStyles = cva("flex items-center w-96 h-28 xs:w-64 xs:h-20 bg-zinc-300 rounded-xl", {
+export const profileStyles = cva("mx-auto flex items-center w-96 h-28 xs:w-64 xs:h-20 bg-zinc-300 rounded-xl", {
   variants: {
     size: {
       default: "w-96 h-12",
@@ -15,6 +15,7 @@ interface ProfileExtendedProps extends ProfileProps {
   imageSrc: StaticImageData;
   text: string;
   id_no: number;
+  onClick: () => void; 
 }
 
 const Profile = ({ imageSrc, text,id_no, ...props }: ProfileExtendedProps) => {
