@@ -30,7 +30,7 @@ var PostedReview = () => {
         <br />
         bikes also provides help if u needed in between the way... .overall{" "}
         <br />
-        wonderful experience....bike ride to sandunes is must.. <br />
+        wonderful experience...bike ride to sandunes is must.. <br />
       </p>
       <div className="my-5">
         <Link href="./feedback/FeedbackOnService/successfull">

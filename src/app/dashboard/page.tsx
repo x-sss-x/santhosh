@@ -1,73 +1,122 @@
+"use client";
 import React from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import profilePhoto from "../../../public/Images/Profile/profile.png";
+import Image from "next/image";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
-const Dashboard = () => {
-  // Dummy data for analytics
-  const analyticsData = {
-    views: 1500,
-    comments: 300,
-    serviceProviders: 25,
-    earnings: 10000,
-  };
+var analytics = [
+  {
+    views: "465k",
+    comments: 100,
+    customers: 90,
+    revenue: "$789",
+  },
+];
 
-  // Dummy data for earnings graph
-  const earningsGraphData = [
-    { day: "Mon", earnings: 200 },
-    { day: "Tue", earnings: 400 },
-    { day: "Wed", earnings: 600 },
-    { day: "Thu", earnings: 800 },
-    { day: "Fri", earnings: 1000 },
-    { day: "Sat", earnings: 1200 },
-    { day: "Sun", earnings: 1400 },
-  ];
+var data = [
+  { name: "Week 1", customers: 20 },
+  { name: "Week 2", customers: 28 },
+  { name: "Week 3", customers: 40 },
+  { name: "Week 4", customers: 47 },
+  { name: "Week 5", customers: 60 },
+];
 
-  // Dummy data for comments
-  const commentsData = [
-    { id: 1, comment: "Great service!" },
-    { id: 2, comment: "I'm satisfied with the quality." },
-    { id: 3, comment: "Could be better." },
-  ];
-
+var Page = () => {
   return (
-    <div className="p-8 bg-stone-200">
-      <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-      <div className="grid grid-cols-4 gap-4 mb-8">
-        <div className="bg-blue-500 p-4 rounded-md text-white">
-          <h2 className="text-lg font-bold mb-2">Views</h2>
-          <p>{analyticsData.views}</p>
-        </div>
-        <div className="bg-green-500 p-4 rounded-md text-white">
-          <h2 className="text-lg font-bold mb-2">Comments</h2>
-          <p>{analyticsData.comments}</p>
-        </div>
-        <div className="bg-yellow-500 p-4 rounded-md text-white">
-          <h2 className="text-lg font-bold mb-2">Service Providers</h2>
-          <p>{analyticsData.serviceProviders}</p>
-        </div>
-        <div className="bg-purple-500 p-4 rounded-md text-white">
-          <h2 className="text-lg font-bold mb-2">Earnings</h2>
-          <p>{analyticsData.earnings}</p>
+    <div>
+      <div>
+        <h1 className="mx-12 font-bold text-xl mt-4">Dashboard</h1>
+        <div className="flex">
+          
+
+        <Image
+          src={profilePhoto}
+          alt="profile"
+          className="my-3 ml-10 w-28 h-28"
+        />
+         <div className="my-12 ml-1">
+          <p>Hi</p>
+          <p>Santhosh</p>{" "}
+          </div>
+        
         </div>
       </div>
-      <h2 className="text-lg font-bold mb-4">Earnings Graph (Last 7 Days)</h2>
-      <LineChart width={500} height={300} data={earningsGraphData}>
-        <XAxis dataKey="day" />
-        <YAxis />
-        <CartesianGrid stroke="#ccc" />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="earnings" stroke="purple" />
-      </LineChart>
-      <h2 className="text-lg font-bold mt-8 mb-4">Comments</h2>
-      <div className="space-y-4">
-        {commentsData.map((comment) => (
-          <div key={comment.id} className="bg-white p-4 rounded-md">
-            <p>{comment.comment}</p>
+      <div className="flex justify-center items-center">
+        <button className="bg-stone-200 p-4 rounded-xl text-2xl hover:bg-stone-400 xs:text-sm">Today</button>
+        <button className="bg-stone-200 p-4 ml-12 rounded-xl text-2xl hover:bg-stone-400 xs:text-sm ">Last 6 days</button>
+        <button className="bg-stone-200 p-4 ml-12 rounded-xl text-2xl hover:bg-stone-400 xs:text-sm">Month</button>
+        <button className="bg-stone-200 p-4 ml-12 rounded-xl text-2xl hover:bg-stone-400 xs:text-sm">Year</button>
+      </div>
+      <div className="container mx-auto p-4 w-full h-60 bg-stone-200 p-4 my-2 rounded-xl">
+        <h1 className="text-xl font-bold mb-4">Analytics</h1>
+        {analytics.map((item, index) => (
+          <div key={index} className="">
+            <div className="flex justify-between my-2">
+              <p className="text-left">Views:</p>
+              <p className="text-right">{item.views}</p>
+            </div>
+            <div className="flex justify-between my-2">
+              <p className="text-left">Comments:</p>
+              <p className="text-right">{item.comments}</p>
+            </div>
+            <div className="flex justify-between my-2">
+              <p className="text-left">Customers:</p>
+              <p className="text-right">{item.customers}</p>
+            </div>
+            <div className="flex justify-between my-2">
+              <p className="text-left">Revenue:</p>
+              <p className="text-right">{item.revenue}</p>
+            </div>
           </div>
         ))}
+      </div>
+      <div className="container mx-auto p-4 w-full h-96 bg-stone-200 p-4 my-2 rounded-xl ">
+        <h1 className="text-xl font-bold mb-4 xs:text-lg">Customers</h1>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="customers"
+              stroke="black"
+              strokeWidth={2}
+              dot={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="container mx-auto p-4 w-full h-96 bg-stone-200 p-4 my-2 rounded-xl mt-5">
+        <h1 className="mx-12 font-bold text-xl">Comments</h1>
+        <div className="flex">
+          
+
+        <Image
+          src={profilePhoto}
+          alt="profile"
+          className="my-3 ml-10 w-28 h-28 xs:w-20 xs:h-20"
+        />
+         <div className="my-12 ml-4 xs:my-3">
+          <p className="font-bold ">Santhosh</p>
+          <p>This service is awesome</p>{" "}
+          </div>
+        
+        </div>
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default Page;
