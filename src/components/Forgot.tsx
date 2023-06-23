@@ -30,7 +30,7 @@ const Forgot: React.FC<ForgotProps> = ({ text }) => {
       <Image src={lockImage} alt="lock image" width={104} height={104} />
       <h1 className=" mt-2 text-center font-light text-black">
              
-        No worries, we'll send you a reset instructions
+        {"No worries, we'll send you a reset instructions"}
                    
                                </h1>
                                <h1 className=" mt-2  font-bold text-black">
